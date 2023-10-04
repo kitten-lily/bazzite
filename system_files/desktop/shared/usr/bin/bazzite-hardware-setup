@@ -149,13 +149,16 @@ if [[ $IMAGE_NAME =~ "deck" || $IMAGE_NAME =~ "ally" ]]; then
         "ONEXPLAYER" =~ "$PRODUCT_NAME" || \
         "AOKZOE" =~ "$PRODUCT_NAME" || \
         ":G1619-01:G1621-02:MicroPC:" =~ ":$SYS_ID:" \
+        ":ROG Ally RC71L_RC71L:" =~ ":$SYS_ID:" \
        ]]; then
       echo "HandyGCCS supported handheld detected, enabling handycon & steam-patch."
-      systemctl enable --now handycon.service
+      if [[ ":ROG Ally RC71L_RC71L:" =~ ":$SYS_ID:" ]]
+        echo "ROG Ally detected, skipping handycon".
+      else
+        systemctl enable --now handycon.service
+      fi
       systemctl enable --now --global steam-patch.service
-    elif [[ ":ROG Ally RC71L_RC71L:" =~ ":$SYS_ID:" ]]
-      echo "ROG Ally detected. Enabling steam-patch."
-      systemctl enable --now --global steam-patch.service
+      sed -i 's/ENABLE_HARDWARE_CONTROL_ON_NON_DECK_HARDWARE=0/ENABLE_HARDWARE_CONTROL_ON_NON_DECK_HARDWARE=1/g' /etc/default/steam-hardware-control
     fi
     systemctl disable --now jupiter-fan-control.service
     systemctl disable --now vpower.service
