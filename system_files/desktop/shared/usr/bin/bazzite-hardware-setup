@@ -139,7 +139,7 @@ if [[ -f $HWS_VER_FILE && $HWS_VER = $HWS_VER_RAN ]]; then
   fi
 fi
 
-if [[ $IMAGE_NAME =~ "deck"  ]]; then
+if [[ $IMAGE_NAME =~ "deck" || $IMAGE_NAME =~ "ally" ]]; then
   if [[ ":Jupiter:" =~ ":$SYS_ID:" ]]; then
     # Future updates to Deck on Jupiter here
   else
