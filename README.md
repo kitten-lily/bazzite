@@ -2,22 +2,22 @@
   <img src="/repo_content/Bazzite_Tagline.svg?raw=true" alt="Bazzite"/>
 </p>
 
-[![build-bazzite](https://github.com/ublue-os/bazzite/actions/workflows/build.yml/badge.svg)](https://github.com/ublue-os/bazzite/actions/workflows/build.yml)
-[![build-bazzite-arch](https://github.com/ublue-os/bazzite-arch/actions/workflows/build.yml/badge.svg)](https://github.com/ublue-os/bazzite-arch/actions/workflows/build.yml)
+[![build-bazzite](https://github.com/ashylily/bazzite/actions/workflows/build.yml/badge.svg)](https://github.com/ashylily/bazzite/actions/workflows/build.yml)
+[![build-bazzite-arch](https://github.com/ashylily/bazzite-arch/actions/workflows/build.yml/badge.svg)](https://github.com/ashylily/bazzite-arch/actions/workflows/build.yml)
 
 ---
 # Table of Contents
-- [Features for **All** Bazzite Images](https://github.com/ublue-os/bazzite#about--features)
-  - [Features for **Desktop** Images](https://github.com/ublue-os/bazzite#desktop)
-  - [Features for **Steam Deck / HTPC** Images](https://github.com/ublue-os/bazzite#steam-deckhome-theater-pcs-htpcs)
-  - [Features for **GNOME** Images](https://github.com/ublue-os/bazzite#gnome)
-- [Why & Frequently Asked Questions](https://github.com/ublue-os/bazzite#why)
-- [Showcase & Newsletter](https://github.com/ublue-os/bazzite#showcase)
-- [Custom Packages](https://github.com/ublue-os/bazzite#custom-packages)
-- [Verification & Metrics](https://github.com/ublue-os/bazzite#verification)
-- [Special Thanks](https://github.com/ublue-os/bazzite#special-thanks)
-- [Building Your Own](https://github.com/ublue-os/bazzite#build-your-own)
-- [Community](https://github.com/ublue-os/bazzite#join-the-community)
+- [Features for **All** Bazzite Images](https://github.com/ashylily/bazzite#about--features)
+  - [Features for **Desktop** Images](https://github.com/ashylily/bazzite#desktop)
+  - [Features for **Steam Deck / HTPC** Images](https://github.com/ashylily/bazzite#steam-deckhome-theater-pcs-htpcs)
+  - [Features for **GNOME** Images](https://github.com/ashylily/bazzite#gnome)
+- [Why & Frequently Asked Questions](https://github.com/ashylily/bazzite#why)
+- [Showcase & Newsletter](https://github.com/ashylily/bazzite#showcase)
+- [Custom Packages](https://github.com/ashylily/bazzite#custom-packages)
+- [Verification & Metrics](https://github.com/ashylily/bazzite#verification)
+- [Special Thanks](https://github.com/ashylily/bazzite#special-thanks)
+- [Building Your Own](https://github.com/ashylily/bazzite#build-your-own)
+- [Community](https://github.com/ashylily/bazzite#join-the-community)
 ---
 
 ## About & Features
@@ -60,7 +60,7 @@ Bazzite is built from [ublue-os/main](https://github.com/ublue-os/main) and [ubl
 
 Common variant available as `bazzite`, suitable for desktop computers.
 
-- Runs Steam and Lutris in a [custom Arch Linux OCI](https://github.com/ublue-os/bazzite-arch/) via Distrobox. <sub><sup>(Except on Nvidia)</sup></sub>
+- Runs Steam and Lutris in a [custom Arch Linux OCI](https://github.com/ashylily/bazzite-arch/) via Distrobox. <sub><sup>(Except on Nvidia)</sup></sub>
 - Automatic updates for the OS, Flatpaks, Nix packages <sup><sub>(Via Fleek)</sub></sup>, and all Distrobox containers.
 
 > [!IMPORTANT]  
@@ -69,13 +69,13 @@ Common variant available as `bazzite`, suitable for desktop computers.
 If you're on an existing Universal Blue image follow [these instructions](https://universal-blue.org/images/#image-list). To rebase an existing upstream Fedora Silverblue/Kinoite ostree system to this image:
 
 ```bash
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/ublue-os/bazzite:latest
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/ashylily/bazzite:latest
 ```
 
 or for devices with Nvidia GPUs:
 
 ```bash
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/ublue-os/bazzite-nvidia:latest
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/ashylily/bazzite-nvidia:latest
 ```
 
 **For users with Secure Boot enabled:** Run `just enroll-secure-boot-key` and enter the password `ublue-os` if prompted to enroll the required key.
@@ -240,7 +240,7 @@ Additionally, the following packages are used from other Copr repos:
 These images are signed with sigstore's [cosign](https://docs.sigstore.dev/cosign/overview/). You can verify the signature by downloading the `cosign.pub` key from this repo and running the following command:
 
 ```bash
-cosign verify --key cosign.pub ghcr.io/ublue-os/bazzite
+cosign verify --key cosign.pub ghcr.io/ashylily/bazzite
 ```
 
 ### Contributor Metrics
