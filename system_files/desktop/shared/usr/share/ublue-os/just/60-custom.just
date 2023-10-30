@@ -88,6 +88,7 @@ install-brew-to-shell:
   echo "Adding homebrew to shell configuration"
   touch $HOME/.zprofile
   touch $HOME/.bash_profile
+  mkdir -p $HOME/.config/fish/conf.d
   if grep -q "linuxbrew" $HOME/.zprofile
   then
     echo "Brew configuration already present in .zprofile"
@@ -101,6 +102,13 @@ install-brew-to-shell:
   else 
     echo "Adding Brew configuration to .bash_profile"
     echo 'eval "$(/var/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bash_profile
+  fi
+  if grep -q "linuxbrew" $HOME/.config/fish/conf.d/brew.fish
+  then
+    echo "Brew configuration already present in fish conf.d"
+  else
+    echo "Adding Brew configuration to fish conf.d"
+    echo 'eval "$(/var/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.config/fish/conf.d/brew.fish
   fi
 
 # Install Greenlight xCloud and xHome streaming AppImage
