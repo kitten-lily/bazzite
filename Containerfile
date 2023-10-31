@@ -278,11 +278,13 @@ RUN if grep -qv "nvidia" <<< "${IMAGE_NAME}"; then \
     chmod +x /usr/bin/latencyflex \
 ; fi
 
+COPY system_files/shared /
+
 # Lily's customizations
-RUN echo "!include /usr/share/ublue-os/just/90-lily-distrobox.just" >> /usr/share/ublue-os/justfile
+RUN echo "!include /usr/share/ublue-os/just/90-lily-distrobox.just" >> /usr/share/ublue-os/justfile && \
+    /tmp/en_se.sh
 
 # Cleanup & Finalize
-COPY system_files/shared /
 RUN /tmp/image-info.sh && \
     rm /usr/share/applications/shredder.desktop && \
     rm /usr/share/vulkan/icd.d/lvp_icd.*.json && \
