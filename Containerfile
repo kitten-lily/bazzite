@@ -282,6 +282,7 @@ COPY system_files/shared /
 
 # Lily's customizations
 RUN echo "!include /usr/share/ublue-os/just/90-lily-distrobox.just" >> /usr/share/ublue-os/justfile && \
+    echo "!include /usr/share/ublue-os/just/95-lily-custom.just" >> /usr/share/ublue-os/justfile && \
     /tmp/en_se.sh
 
 # Cleanup & Finalize
