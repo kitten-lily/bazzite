@@ -1,6 +1,7 @@
 # vim: set ft=make :
 
 # Create an Arch container
+[private]
 distrobox-arch:
   echo 'Creating Arch distrobox ...'
   distrobox-create --nvidia --image ghcr.io/ublue-os/arch-distrobox:latest -n arch -Y
@@ -21,11 +22,13 @@ distrobox-fedora:
   distrobox-create --nvidia --image ghcr.io/ublue-os/fedora-distrobox:latest -n fedora -Y
 
 # Create an openSUSE container
+[private]
 distrobox-opensuse:
   echo 'Creating openSUSE distrobox ...'
   distrobox-create --nvidia --image quay.io/toolbx-images/opensuse-toolbox:tumbleweed -n opensuse -Y
 
 # Create an Ubuntu container
+[private]
 distrobox-ubuntu:
   echo 'Creating Ubuntu distrobox ...'
   distrobox-create --nvidia --image quay.io/toolbx-images/ubuntu-toolbox:22.04 -n ubuntu -Y
@@ -42,6 +45,7 @@ install-obs-studio-portable:
   echo 'Install complete'
 
 # Set up Bazzite-Arch Distrobox container
+[private]
 install-bazzite-arch:
   IMAGE_INFO="/usr/share/ublue-os/image-info.json" && \
   BASE_IMAGE_NAME=$(jq -r '."base-image-name"' < $IMAGE_INFO) && \
@@ -71,6 +75,7 @@ install-bazzite-arch:
   rm -f ~/Desktop/steam.desktop
 
 # Remove container image for bazzite-arch and reinstall it
+[private]
 reset-bazzite-arch:
   IMAGE_INFO="/usr/share/ublue-os/image-info.json" && \
   BASE_IMAGE_NAME=$(jq -r '."base-image-name"' < $IMAGE_INFO) && \
@@ -90,12 +95,14 @@ install-webapp-manager: distrobox-check-fedora
     distrobox-export --app webapp-manager"
 
 # Install Oversteer for Logitech steering wheels
+[private]
 install-oversteer: distrobox-check-fedora
   distrobox enter -n fedora -- bash -c 'sudo dnf copr enable -y kylegospo/oversteer && \
     sudo dnf install -y oversteer && \
     distrobox-export --app oversteer'
 
 # Install OpenRazer for Razer gaming hardware
+[private]
 install-openrazer: distrobox-check-fedora
   distrobox-enter -n fedora -- bash -c 'sudo wget https://download.opensuse.org/repositories/hardware:/razer/Fedora_$(rpm -E %fedora)/hardware:razer.repo -O /etc/yum.repos.d/hardware:razer.repo && \
     sudo dnf install -y \
@@ -122,6 +129,7 @@ install-solaar: distrobox-check-fedora
   cp ~/.local/share/applications/fedora-solaar.desktop ~/.config/autostart/fedora-solaar.desktop
 
 # Install Resilio Sync, a file synchronization utility powered by BitTorrent
+[private]
 install-resilio-sync: distrobox-check-fedora
   distrobox-enter -n fedora -- 'sudo rpm --import https://linux-packages.resilio.com/resilio-sync/key.asc' && \
   distrobox-enter -n fedora -- 'sudo wget https://raw.githubusercontent.com/ublue-os/bazzite/main/post_install_files/resilio_sync/resilio-sync.repo -O /etc/yum.repos.d/resilio-sync.repo' && \
@@ -133,12 +141,14 @@ install-resilio-sync: distrobox-check-fedora
   systemctl enable --user --now fedora-resilio-sync.service
 
 # Install scrcpy, a utility that mirrors Android devices (video and audio) connected via USB or over TCP/IP
+[private]
 install-scrcpy: distrobox-check-fedora
   distrobox enter -n fedora -- bash -c 'sudo dnf copr enable -y zeno/scrcpy && \
     sudo dnf install -y scrcpy && \
     distrobox-export --app scrcpy'
 
 # Install OpenTabletDriver, an open source, cross-platform, user-mode tablet driver
+[private]
 install-opentabletdriver:
   if grep -qvz "arch" <<< $(distrobox list); then \
     distrobox-create --nvidia --image ghcr.io/ublue-os/arch-distrobox:latest -n arch -Y; \

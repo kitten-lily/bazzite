@@ -1,15 +1,18 @@
 # vim: set ft=make :
 
 # Remove all waydroid-related files in your user folders
+[private]
 reset-waydroid:
   bash -c 'sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid ~/.share/waydroid ~/.local/share/applications/*aydroid* ~/.local/share/waydroid'
 
 # Quickly initialize a waydroid image
+[private]
 init-waydroid:
   #!/usr/bin/env bash
   sudo waydroid init -c 'https://ota.waydro.id/system' -v 'https://ota.waydro.id/vendor'
 
 # Launch Waydroid configuration helper
+[private]
 configure-waydroid:
   #!/usr/bin/env bash
   git clone https://github.com/casualsnek/waydroid_script.git --depth 1 /tmp/waydroid_script
@@ -21,6 +24,7 @@ configure-waydroid:
   sudo rm -rf /tmp/waydroid_script
 
 # Install CoreCtrl for overclocking & undervolting AMD GPUs
+[private]
 install-corectrl:
   echo 'Installing CoreCtrl...'
   ublue-update --wait
@@ -29,15 +33,18 @@ install-corectrl:
   rpm-ostree kargs --append="amdgpu.ppfeaturemask=0xffffffff"
 
 # Install Nix with the Determinate Nix Installer
+[private]
 install-nix:
   #!/usr/bin/env bash
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sudo bash -s -- install --no-confirm
 
 # Uninstall Nix
+[private]
 remove-nix:
   sudo /nix/nix-installer uninstall
 
 # Install Fleek (https://getfleek.dev/)
+[private]
 install-fleek:
   #!/usr/bin/env bash
   if [[ -d "/nix" ]]; then
@@ -49,6 +56,7 @@ install-fleek:
   fi
 
 # Integrate Nix/Fleek applications with system theme
+[private]
 install-fleek-themes:
   #!/usr/bin/env bash
   if [[ -x "/var/usrlocal/bin/fleek" ]]; then
@@ -101,6 +109,7 @@ install-brew-to-shell:
   fi
 
 # Install Greenlight xCloud and xHome streaming AppImage
+[private]
 get-greenlight:
   #!/usr/bin/env bash
   if grep -q 'it.mijorus.gearlever' <<< $(flatpak list); then
@@ -112,6 +121,7 @@ get-greenlight:
   fi
 
 # Install Wootility for configuring Wooting Keyboards
+[private]
 get-wootility:
   #!/usr/bin/env bash
   if grep -q 'it.mijorus.gearlever' <<< $(flatpak list); then
@@ -123,6 +133,7 @@ get-wootility:
   fi
 
 # Enable Supergfxctl, a Nvidia GPU switcher for hybrid laptops
+[private]
 enable-supergfxctl: 
   #!/usr/bin/env bash
   IMAGE_INFO="/usr/share/ublue-os/image-info.json"
@@ -134,6 +145,7 @@ enable-supergfxctl:
   fi
 
 # Patch a bug in some 32-bit Source 1.x titles that causes them to crash at startup
+[private]
 patch-source1-tcmalloc:
   #!/usr/bin/env bash
   IMAGE_INFO="/usr/share/ublue-os/image-info.json"
@@ -147,6 +159,7 @@ patch-source1-tcmalloc:
   echo "Delete libtcmalloc_minimal.so.x in the game's bin folder if present."
 
 # Patch GMod's 64-bit beta to work properly on Linux (https://github.com/solsticegamestudios/GModCEFCodecFix)
+[private]
 patch-gmod:
   #!/usr/bin/env bash
   mkdir -p /tmp/patch-gmod
@@ -159,11 +172,13 @@ patch-gmod:
   rm -rf /tmp/patch-gmod
 
 # Fix an error that occurs after installing SteamVR in Bazzite-Arch
+[private]
 patch-steam-vr:
   #!/usr/bin/env bash
   sudo setcap CAP_SYS_NICE+ep $HOME/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher
 
 # Activate Valve-inspired Vapor theme on GNOME
+[private]
 enable-vapor-theme:
   #!/usr/bin/env bash
   IMAGE_INFO="/usr/share/ublue-os/image-info.json"
@@ -189,6 +204,7 @@ enable-vapor-theme:
   fi
 
 # Activate Valve-inspired VGUI2 theme on GNOME
+[private]
 enable-vgui2-theme:
   #!/usr/bin/env bash
   IMAGE_INFO="/usr/share/ublue-os/image-info.json"
@@ -229,6 +245,7 @@ install-adwaita-for-steam:
   fi
 
 # Set system to boot without showing the grub screen with options
+[private]
 hide-grub:
   #!/usr/bin/env bash
   sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
@@ -241,6 +258,7 @@ hide-grub:
   fi
 
 # Set system to boot with the grub screen showing options (Default)
+[private]
 unhide-grub:
   #!/usr/bin/env bash
   sudo sed -i '/GRUB_HIDDEN_TIMEOUT=1/d' /etc/default/grub
@@ -313,6 +331,7 @@ enable-vfio:
   fi
 
 # Enable watchdog (default, recovers the system in the event of a malfunction, possible impact to performance due to interrupts)
+[private]
 enable-watchdog:
   #!/usr/bin/env bash
   CPU_MODEL=$(lscpu --json | jq -r '."lscpu"[7]."data"')
@@ -325,6 +344,7 @@ enable-watchdog:
   rpm-ostree kargs $WATCHDOG_KARGS
 
 # Disable watchdog (potential performance improvement due to fewer interrupts)
+[private]
 disable-watchdog:
   #!/usr/bin/env bash
   CPU_MODEL=$(lscpu --json | jq -r '."lscpu"[7]."data"')
@@ -337,6 +357,7 @@ disable-watchdog:
   rpm-ostree kargs $WATCHDOG_KARGS
 
 # Add SELinux file context for default looking-glass shm file so that libvirt can create it when needed
+[private]
 selinux-looking-glass:
   sudo semanage fcontext -a -t svirt_tmpfs_t /dev/shm/looking-glass
 
