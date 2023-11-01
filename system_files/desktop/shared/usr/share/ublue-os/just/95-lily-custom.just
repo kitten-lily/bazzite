@@ -22,3 +22,20 @@ devmode-on:
       NEW_IMAGE=$(echo $CURRENT_IMAGE | sed "s/bazzite-gnome/bluefin-dx/")
       rpm-ostree rebase $NEW_IMAGE
   fi
+
+# Initialize chezmoi
+init-chezmoi:
+  #!/usr/bin/env bash
+  if [[ -d "$HOME/.local/share/chezmoi" ]]; then
+    echo "chezmoi is already initialized"
+  else
+    if ! [ -x "$(which chezmoi 2>/dev/null)" ]; then
+      if [ -x "$(which brew 2>/dev/null)" ]; then
+        brew install chezmoi
+      else
+        echo "chezmoi not found"
+        exit
+      fi
+    fi
+    chezmoi init --apply git@github.com:ashylily/dotfiles.git
+  fi
