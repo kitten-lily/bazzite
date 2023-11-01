@@ -119,7 +119,8 @@ RUN if grep -q "kinoite" <<< "${BASE_IMAGE_NAME}"; then \
         kdeconnectd \
         kdeplasma-addons \
         extest.i686 \
-        rom-properties-kf5 && \
+        rom-properties-kf5 \
+        kvantum && \
     if [[ "${FEDORA_MAJOR_VERSION}" -lt "39" ]]; then \
         rpm-ostree override replace \
         --experimental \
@@ -167,6 +168,7 @@ RUN if grep -q "kinoite" <<< "${BASE_IMAGE_NAME}"; then \
         gnome-shell-extension-gsconnect \
         nautilus-gsconnect \
         gnome-shell-extension-system76-scheduler \
+        gnome-shell-extension-caribou-blocker \
         gnome-shell-extension-compiz-windows-effect \
         gnome-shell-extension-just-perfection \
         gnome-shell-extension-blur-my-shell \
@@ -252,10 +254,7 @@ RUN if grep -qv "nvidia" <<< "${IMAGE_NAME}"; then \
         lutris \
         wxGTK \
         libFAudio \
-        wine-core.x86_64 \
-        wine-core.i686 \
-        wine-pulseaudio.x86_64 \
-        wine-pulseaudio.i686 \
+        wine-core \
         winetricks \
         protontricks \
         latencyflex-vulkan-layer \
@@ -281,9 +280,22 @@ RUN if grep -qv "nvidia" <<< "${IMAGE_NAME}"; then \
 COPY system_files/shared /
 
 # Lily's customizations
+RUN rpm-ostree install \
+        fantasquesansmono-nerd-fonts \
+        alacritty \
+        papirus-icon-theme \
+        solaar
+
 RUN echo "!include /usr/share/ublue-os/just/90-lily-distrobox.just" >> /usr/share/ublue-os/justfile && \
-    echo "!include /usr/share/ublue-os/just/95-lily-custom.just" >> /usr/share/ublue-os/justfile && \
-    /tmp/en_se.sh
+    echo "!include /usr/share/ublue-os/just/95-lily-custom.just" >> /usr/share/ublue-os/justfile
+
+RUN /tmp/microsoft-edge.sh
+
+RUN /tmp/en_se.sh
+    
+RUN wget https://raw.githubusercontent.com/ublue-os/bling/main/modules/bling/installers/1password.sh -O /tmp/1password.sh && \
+    chmod +x /tmp/1password.sh && \
+    /tmp/1password.sh
 
 # Cleanup & Finalize
 RUN /tmp/image-info.sh && \
@@ -408,7 +420,6 @@ RUN if grep -q "kinoite" <<< "${BASE_IMAGE_NAME}"; then \
     rpm-ostree install \
         steamdeck-gnome-presets \
         gnome-shell-extension-bazzite-menu \
-        gnome-shell-extension-caribou-blocker \
         sddm && \
     wget https://raw.githubusercontent.com/doitsujin/dxvk/master/dxvk.conf -O /usr/etc/dxvk-example.conf \
 ; fi
@@ -441,7 +452,6 @@ RUN rpm-ostree install \
     zstd \
     zenity \
     newt \
-    qt5-qtvirtualkeyboard \
     python-vdf \
     python-crcmod && \
     git clone https://gitlab.com/evlaV/jupiter-dock-updater-bin.git \
@@ -516,10 +526,7 @@ RUN rpm-ostree install \
         gamescope.i686 \
         gamescope-session-plus \
         gamescope-session-steam \
-        wine-core.x86_64 \
-        wine-core.i686 \
-        wine-pulseaudio.x86_64 \
-        wine-pulseaudio.i686 \
+        wine-core \
         winetricks \
         protontricks \
         gperftools-libs.i686 && \
