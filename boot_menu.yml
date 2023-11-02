@@ -1,10 +1,10 @@
 ublue_variants:
-  - label: ublue-os/bazzite-nvidia
+  - label: ashylily/bazzite-nvidia
     ks: /kickstart/ublue-os-nvidia.ks
     flavors:
       - label: bazzite-nvidia
         info: Bazzite (For Nvidia GPUs)
-  - label: ublue-os/bazzite-gnome-nvidia
+  - label: ashylily/bazzite-gnome-nvidia
     ks: /kickstart/ublue-os-nvidia.ks
     flavors:
       - label: bazzite-gnome-nvidia
