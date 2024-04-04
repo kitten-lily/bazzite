@@ -48,9 +48,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base_image_flavor: [main, asus, framework, surface]
-        base_name: [bazzite, bazzite-deck, bazzite-nvidia]
-        base_image_name: [kinoite, silverblue]
+        base_image_flavor: [main]
+        base_name: [bazzite-nvidia]
+        base_image_name: [silverblue]
         major_version: [39]
         include:
           - major_version: 39
