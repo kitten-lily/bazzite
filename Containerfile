@@ -215,7 +215,7 @@ RUN rpm-ostree override replace \
         glibc32 \
         || true
 
-# Install Valve's patched Mesa & Pipewire
+# Install Valve's patched Mesa, Pipewire & Bluez
 # Install patched switcheroo control with proper discrete GPU support
 RUN rpm-ostree override remove \
         mesa-va-drivers-freeworld && \
@@ -230,6 +230,10 @@ RUN rpm-ostree override remove \
         mesa-libEGL \
         mesa-vulkan-drivers \
         mesa-libGL \
+        bluez \
+        bluez-cups \
+        bluez-libs \
+        bluez-obexd \
         pipewire \
         pipewire-alsa \
         pipewire-gstreamer \
@@ -313,17 +317,21 @@ RUN rpm-ostree install \
         nerd-fonts \
         glow \
         gum \
+        vim \
         setools \
+        setroubleshoot \
         cockpit-networkmanager \
         cockpit-podman \
         cockpit-selinux \
         cockpit-system \
         cockpit-navigator \
         cockpit-storaged \
+        wl-clipboard \
         lsb_release && \
     pip install --prefix=/usr topgrade && \
     rpm-ostree install \
         ublue-update && \
+    echo "X-GNOME-Autostart-enabled=false" >> /usr/etc/xdg/autostart/sealertauto.desktop && \
     sed -i '1s/^/[include]\npaths = ["\/etc\/ublue-os\/topgrade.toml"]\n\n/' /usr/share/ublue-update/topgrade-user.toml && \
     sed -i 's/min_battery_percent.*/min_battery_percent = 20.0/' /usr/etc/ublue-update/ublue-update.toml && \
     sed -i 's/max_cpu_load_percent.*/max_cpu_load_percent = 100.0/' /usr/etc/ublue-update/ublue-update.toml && \
@@ -678,6 +686,7 @@ RUN rpm-ostree install \
     galileo-mura \
     powerbuttond \
     hhd \
+    hhd-ui \
     adjustor \
     vpower \
     ds-inhibit \
@@ -695,23 +704,14 @@ RUN rpm-ostree install \
     xorg-x11-server-Xvfb \
     python-vdf \
     python-crcmod && \
-    curl -L $(curl -s "https://api.github.com/repos/hhd-dev/hhd-ui/releases/latest" | grep "browser_download_url" | cut -d '"' -f 4) -o /usr/bin/hhd-ui && \
-    chmod +x /usr/bin/hhd-ui && \
     git clone https://gitlab.com/evlaV/jupiter-dock-updater-bin.git \
         --depth 1 \
         /tmp/jupiter-dock-updater-bin && \
     mv -v /tmp/jupiter-dock-updater-bin/packaged/usr/lib/jupiter-dock-updater /usr/lib/jupiter-dock-updater && \
     rm -rf /tmp/jupiter-dock-updater-bin
 
-# Install Steam Deck patched Wireplumber, Bluez & UPower
+# Install Steam Deck patched Wireplumber & UPower
 RUN rpm-ostree override replace \
-    --experimental \
-    --from repo=copr:copr.fedorainfracloud.org:kylegospo:bazzite-multilib \
-        bluez \
-        bluez-cups \
-        bluez-libs \
-        bluez-obexd && \
-    rpm-ostree override replace \
     --experimental \
     --from repo=copr:copr.fedorainfracloud.org:kylegospo:bazzite \
         wireplumber \
